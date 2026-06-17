@@ -383,6 +383,7 @@ export default function App() {
   const [showAddVehicle, setShowAddVehicle] = useState(false);
   const [showAddLog, setShowAddLog] = useState(false);
   const [showUpdateOdo, setShowUpdateOdo] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(null);
   const [newVehicle, setNewVehicle] = useState({ name:"", make:"", model:"", year:"", plate:"", color:"", purchaseDate:"", purchasePrice:"", odometer:"" });
   const [newLog, setNewLog] = useState({ service:"", date:"", odo:"", cost:"", workshop:"", notes:"" });
   const [newOdo, setNewOdo] = useState("");
@@ -437,6 +438,13 @@ export default function App() {
     } : v));
     setShowUpdateOdo(false);
     setNewOdo("");
+  }
+
+  function deleteVehicle(id) {
+    setVehicles(prev => prev.filter(v => v.id !== id));
+    setConfirmDelete(null);
+    setSelectedVehicle(null);
+    setPage("dashboard");
   }
 
   // ─── Dashboard ──────────────────────────────────────────────
@@ -591,6 +599,7 @@ export default function App() {
           <div style={{marginTop:16,display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-primary" onClick={() => setShowAddLog(true)}>+ تسجيل صيانة</button>
             <button className="btn btn-secondary" onClick={() => setShowUpdateOdo(true)}>📍 تحديث العداد</button>
+            <button className="btn btn-danger" onClick={() => setConfirmDelete(sv)}>🗑️ حذف السيارة</button>
           </div>
         </div>
 
@@ -884,6 +893,25 @@ export default function App() {
   }
 
   // ─── Render ──────────────────────────────────────────────────
+  function ConfirmDeleteModal() {
+    if (!confirmDelete) return null;
+    return (
+      <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.8)",backdropFilter:"blur(8px)",zIndex:300,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+        <div style={{background:"#1E293B",border:"1px solid #EF4444",borderRadius:20,padding:28,width:"100%",maxWidth:360,textAlign:"center"}}>
+          <div style={{fontSize:48,marginBottom:12}}>🗑️</div>
+          <div style={{fontSize:18,fontWeight:700,marginBottom:8}}>حذف السيارة؟</div>
+          <div style={{fontSize:13,color:"#94A3B8",marginBottom:24,lineHeight:1.6}}>
+            بتحذف <strong style={{color:"#F1F5F9"}}>{confirmDelete.name}</strong> مع كل سجل الصيانة.<br/>هذا الإجراء لا يمكن التراجع عنه.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"center"}}>
+            <button className="btn" style={{background:"#7F1D1D",color:"#FCA5A5",border:"1px solid #EF4444"}} onClick={() => deleteVehicle(confirmDelete.id)}>نعم، احذف</button>
+            <button className="btn btn-secondary" onClick={() => setConfirmDelete(null)}>إلغاء</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <style>{css}</style>
@@ -907,7 +935,9 @@ export default function App() {
         {showAddVehicle && <AddVehicleModal />}
         {showAddLog && sv && <AddLogModal />}
         {showUpdateOdo && sv && <UpdateOdoModal />}
+        {confirmDelete && <ConfirmDeleteModal />}
       </div>
     </>
   );
 }
+
