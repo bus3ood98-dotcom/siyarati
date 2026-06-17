@@ -1,38 +1,6 @@
 import { useState } from "react";
 
-const INITIAL_VEHICLES = [
-  {
-    id:1, name:"لاندكروزر الأبيض", make:"Toyota", model:"Land Cruiser", year:2020,
-    plate:"١٢٣٤ بح", color:"أبيض", purchaseDate:"2020-03-15", purchasePrice:14500,
-    odometer:87430, odometerUpdated:"2026-06-01", dailyKmRate:28,
-    maintenance:[
-      {id:1,name:"زيت المحرك",category:"oil",lastDate:"2026-03-12",lastOdo:82000,dueDate:"2026-09-12",dueOdo:92000,type:"both",cost:20},
-      {id:2,name:"فلتر الهواء",category:"filter",lastDate:"2025-01-10",lastOdo:65000,dueDate:"2026-01-10",dueOdo:85000,type:"both",cost:8},
-      {id:3,name:"التأمين",category:"insurance",lastDate:"2025-06-10",lastOdo:null,dueDate:"2026-06-10",dueOdo:null,type:"date",cost:120},
-      {id:4,name:"الفحص الفني",category:"inspection",lastDate:"2025-05-20",lastOdo:null,dueDate:"2026-05-20",dueOdo:null,type:"date",cost:15},
-      {id:5,name:"التواير",category:"tires",lastDate:"2024-08-01",lastOdo:60000,dueDate:"2027-08-01",dueOdo:100000,type:"both",cost:180},
-    ],
-    logs:[
-      {id:1,service:"تغيير زيت",date:"2026-03-12",odo:82000,cost:20,workshop:"نجم الخليج",notes:""},
-      {id:2,service:"تبديل بطارية",date:"2025-11-05",odo:76000,cost:45,workshop:"بطاريات الخبر",notes:"Bosch 70A"},
-      {id:3,service:"تغيير تواير",date:"2024-08-01",odo:60000,cost:180,workshop:"العجلة الذهبية",notes:"Michelin"},
-    ],
-  },
-  {
-    id:2, name:"كامري الفضي", make:"Toyota", model:"Camry", year:2022,
-    plate:"٥٦٧٨ بح", color:"فضي", purchaseDate:"2022-07-01", purchasePrice:8900,
-    odometer:41200, odometerUpdated:"2026-05-20", dailyKmRate:18,
-    maintenance:[
-      {id:1,name:"زيت المحرك",category:"oil",lastDate:"2026-01-15",lastOdo:38000,dueDate:"2026-07-15",dueOdo:48000,type:"both",cost:18},
-      {id:2,name:"التأمين",category:"insurance",lastDate:"2025-06-23",lastOdo:null,dueDate:"2026-06-23",dueOdo:null,type:"date",cost:95},
-      {id:3,name:"الفحص الفني",category:"inspection",lastDate:"2026-04-10",lastOdo:null,dueDate:"2027-04-10",dueOdo:null,type:"date",cost:15},
-    ],
-    logs:[
-      {id:1,service:"تغيير زيت",date:"2026-01-15",odo:38000,cost:18,workshop:"تويوتا البحرين",notes:""},
-      {id:2,service:"تجديد تأمين",date:"2025-06-23",odo:29000,cost:95,workshop:"",notes:"بوليصة شاملة"},
-    ],
-  },
-];
+const INITIAL_VEHICLES = [];
 
 const SC = {
   ok:      {bg:"#D1FAE5",text:"#065F46",dot:"#10B981",label:"ممتاز"},
